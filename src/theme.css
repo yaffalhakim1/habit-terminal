@@ -108,7 +108,7 @@ input, select { font-family: inherit; }
   background: var(--accent);
   animation: blink 1s step-end infinite;
   vertical-align: middle;
-  margin-left: 2px;
+  margin-left: var(--sp-2xs);
 }
 
 @keyframes blink { 50% { opacity: 0; } }
@@ -281,7 +281,7 @@ input, select { font-family: inherit; }
   font-size: var(--fs-2xs);
   color: var(--fg3);
   opacity: 0.7;
-  margin-top: 1px;
+  margin-top: var(--sp-2xs);
 }
 
 .habit-streak {
@@ -320,7 +320,7 @@ input, select { font-family: inherit; }
 
 .heatmap-label::before { content: "// "; color: var(--fg3); }
 
-.heatmap-grid { display: flex; flex-wrap: wrap; gap: 3px; }
+.heatmap-grid { display: flex; flex-wrap: wrap; gap: var(--sp-2xs); }
 
 .heatmap-cell {
   width: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem);
@@ -513,7 +513,7 @@ input, select { font-family: inherit; }
   font-size: var(--fs-2xs);
   white-space: nowrap;
   z-index: 90;
-  box-shadow: 0 4px 1rem rgba(0, 0, 0, 0.3);
+  box-shadow: 0 var(--sp-xs) 1rem rgba(0, 0, 0, 0.3);
   animation: toast-in 0.2s var(--ease);
 }
 
