@@ -325,6 +325,10 @@ select {
   position: relative;
 }
 
+.habit-menu-open {
+  z-index: 10;
+}
+
 .habit-menu-btn {
   background: transparent;
   color: var(--fg2);

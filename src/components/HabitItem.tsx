@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { Habit } from "../types";
 
 interface Props {
@@ -12,11 +12,22 @@ interface Props {
 
 export default function HabitItem({ habit, done, counter, onToggle, onEdit, onDelete }: Props) {
   const [menu, setMenu] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!menu) return;
+    const close = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setMenu(false);
+    };
+    document.addEventListener("mousedown", close);
+    return () => document.removeEventListener("mousedown", close);
+  }, [menu]);
 
   return (
     <div
-      className={`habit ${done ? "habit-done" : ""}`}
-      onClick={onToggle}
+      ref={ref}
+      className={`habit ${done ? "habit-done" : ""} ${menu ? "habit-menu-open" : ""}`}
+      onClick={() => { if (!menu) onToggle(); }}
       onContextMenu={e => { e.preventDefault(); setMenu(!menu); }}
     >
       <button className="habit-check" aria-label={done ? "Undo" : "Complete"}>
