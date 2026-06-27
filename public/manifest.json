@@ -1,0 +1,14 @@
+{
+  "name": "term.habits",
+  "short_name": "term.habits",
+  "description": "terminal-themed habit tracker with RPG leveling",
+  "start_url": "/habit-terminal/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/habit-terminal/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/habit-terminal/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

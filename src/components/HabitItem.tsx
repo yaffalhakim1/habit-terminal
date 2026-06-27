@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { Habit } from "../types";
 
 interface Props {
@@ -5,15 +6,18 @@ interface Props {
   done: boolean;
   counter?: number;
   onToggle: () => void;
+  onEdit: () => void;
   onDelete: () => void;
 }
 
-export default function HabitItem({ habit, done, counter, onToggle, onDelete }: Props) {
+export default function HabitItem({ habit, done, counter, onToggle, onEdit, onDelete }: Props) {
+  const [menu, setMenu] = useState(false);
+
   return (
     <div
       className={`habit ${done ? "habit-done" : ""}`}
       onClick={onToggle}
-      onContextMenu={e => { e.preventDefault(); onDelete(); }}
+      onContextMenu={e => { e.preventDefault(); setMenu(!menu); }}
     >
       <button className="habit-check" aria-label={done ? "Undo" : "Complete"}>
         <span className="habit-check-mark">✓</span>
@@ -32,6 +36,18 @@ export default function HabitItem({ habit, done, counter, onToggle, onDelete }: 
         🔥{habit.streak}
       </span>
       <span className="habit-xp">+{habit.xp}xp</span>
+      <button
+        className="habit-menu-btn"
+        onClick={e => { e.stopPropagation(); setMenu(!menu); }}
+        aria-label="Habit menu"
+      >⋮</button>
+      {menu && (
+        <div className="habit-menu" onClick={e => e.stopPropagation()}>
+          <button className="habit-menu-item" onClick={() => { onEdit(); setMenu(false); }}>[edit]</button>
+          <button className="habit-menu-item habit-menu-danger" onClick={() => { onDelete(); setMenu(false); }}>[delete]</button>
+          <button className="habit-menu-item" onClick={() => setMenu(false)}>[close]</button>
+        </div>
+      )}
     </div>
   );
 }

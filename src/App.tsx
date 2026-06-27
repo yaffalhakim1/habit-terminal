@@ -121,13 +121,29 @@ export default function App() {
   }, [state, persist, showToast]);
 
   const handleDeleteHabit = useCallback((id: string) => {
+    setModal({
+      title: "delete habit?",
+      body: "this cannot be undone.",
+      onConfirm: () => {
+        const next = {
+          ...state,
+          habits: state.habits.filter((h: Habit) => h.id !== id),
+          routines: state.routines.map(r => ({ ...r, habitIds: r.habitIds.filter((hid: string) => hid !== id) })),
+        };
+        persist(next);
+        setModal(null);
+        showToast("[ok] habit deleted", "info");
+      },
+    });
+  }, [state, persist, showToast]);
+
+  const handleEditHabit = useCallback((id: string, updates: Partial<Habit>) => {
     const next = {
       ...state,
-      habits: state.habits.filter((h: Habit) => h.id !== id),
-      routines: state.routines.map(r => ({ ...r, habitIds: r.habitIds.filter((hid: string) => hid !== id) })),
+      habits: state.habits.map((h: Habit) => h.id === id ? { ...h, ...updates } : h),
     };
     persist(next);
-    showToast("[ok] habit deleted", "info");
+    showToast("[ok] habit updated");
   }, [state, persist, showToast]);
 
   const handleAddRoutine = useCallback((r: { name: string; icon: string; habitIds: string[] }) => {
@@ -163,6 +179,7 @@ export default function App() {
           history={state.history}
           player={state.player}
           onToggle={handleToggle}
+          onEdit={handleEditHabit}
           onDelete={handleDeleteHabit}
           onAddHabit={handleAddHabit}
           onAddRoutine={handleAddRoutine}

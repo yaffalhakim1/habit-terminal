@@ -6,6 +6,7 @@ import HabitItem from "./HabitItem";
 import Heatmap from "./Heatmap";
 import AddHabit from "./AddHabit";
 import AddRoutine from "./AddRoutine";
+import EditHabit from "./EditHabit";
 
 interface Props {
   habits: Habit[];
@@ -13,14 +14,16 @@ interface Props {
   history: Record<string, DayLog>;
   player: PlayerState;
   onToggle: (id: string) => void;
+  onEdit: (id: string, updates: Partial<Habit>) => void;
   onDelete: (id: string) => void;
   onAddHabit: (h: Omit<Habit, "id" | "streak" | "createdAt">) => void;
   onAddRoutine: (r: { name: string; icon: string; habitIds: string[] }) => void;
 }
 
-export default function HabitsPage({ habits, routines, history, player, onToggle, onDelete, onAddHabit, onAddRoutine }: Props) {
+export default function HabitsPage({ habits, routines, history, player, onToggle, onEdit, onDelete, onAddHabit, onAddRoutine }: Props) {
   const [showAdd, setShowAdd] = useState(false);
   const [showRoutine, setShowRoutine] = useState(false);
+  const [editing, setEditing] = useState<Habit | null>(null);
   const [openRoutines, setOpenRoutines] = useState<Set<string>>(new Set());
   const today = todayKey();
   const hist = history[today] || { done: [], counters: {} };
@@ -58,6 +61,7 @@ export default function HabitsPage({ habits, routines, history, player, onToggle
             done={hist.done.includes(h.id)}
             counter={hist.counters?.[h.id]}
             onToggle={() => onToggle(h.id)}
+            onEdit={() => setEditing(h)}
             onDelete={() => onDelete(h.id)}
           />
         ))}
@@ -78,6 +82,7 @@ export default function HabitsPage({ habits, routines, history, player, onToggle
                 done={hist.done.includes(h.id)}
                 counter={hist.counters?.[h.id]}
                 onToggle={() => onToggle(h.id)}
+                onEdit={() => setEditing(h)}
                 onDelete={() => onDelete(h.id)}
               />
             ))}
@@ -96,6 +101,7 @@ export default function HabitsPage({ habits, routines, history, player, onToggle
 
       <AddHabit open={showAdd} onClose={() => setShowAdd(false)} onAdd={onAddHabit} />
       <AddRoutine habits={habits} open={showRoutine} onClose={() => setShowRoutine(false)} onAdd={onAddRoutine} />
+      <EditHabit habit={editing} onClose={() => setEditing(null)} onSave={onEdit} />
 
       <div className="sectionlabel">
         <span className="sectionlabel-text">last 12 weeks</span>
