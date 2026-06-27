@@ -103,13 +103,11 @@ async function callProvider(config: AIConfig, messages: ChatMessage[]): Promise<
     body: JSON.stringify({
       model: config.model,
       messages,
-      max_tokens: 1024,
-      temperature: 0.7,
     }),
   });
 
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error?.message || "AI request failed");
+  if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`);
   return data.choices?.[0]?.message?.content || "";
 }
 
