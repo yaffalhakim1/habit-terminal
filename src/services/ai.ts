@@ -100,9 +100,11 @@ async function callProvider(config: AIConfig, messages: ChatMessage[]): Promise<
     }),
   });
 
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error?.message || `HTTP ${res.status}`);
-  return data.choices?.[0]?.message?.content || "";
+  const rawText = await res.text();
+  let data: Record<string, unknown>;
+  try { data = JSON.parse(rawText); } catch { data = { raw: rawText }; }
+  if (!res.ok) throw new Error(`[${res.status}] ${JSON.stringify((data as Record<string, unknown>).error || data)}`);
+  return (data as { choices?: Array<{ message?: { content?: string } }> }).choices?.[0]?.message?.content || "";
 }
 
 export async function reflect(
