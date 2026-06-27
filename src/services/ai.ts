@@ -9,7 +9,7 @@ export interface AIConfig {
 }
 
 const PROVIDER_DEFAULTS: Record<AIConfig["provider"], { endpoint: string; model: string }> = {
-  mimo: { endpoint: "https://api.xiaomimimo.com/v1/chat/completions", model: "MiMo-V2.5" },
+  mimo: { endpoint: "https://token-plan-cn.xiaomimimo.com/v1/chat/completions", model: "mimo-v2.5-pro" },
   openai: { endpoint: "https://api.openai.com/v1/chat/completions", model: "gpt-4o-mini" },
   gemini: { endpoint: "https://generativelanguage.googleapis.com/v1beta/openai/", model: "gemini-2.5-flash" },
 };
@@ -89,12 +89,17 @@ async function callProvider(config: AIConfig, messages: ChatMessage[]): Promise<
     return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
   }
 
+  const isMimo = config.provider === "mimo";
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (isMimo) {
+    headers["api-key"] = config.apiKey;
+  } else {
+    headers["Authorization"] = `Bearer ${config.apiKey}`;
+  }
+
   const res = await fetch(provider.endpoint, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${config.apiKey}`,
-    },
+    headers,
     body: JSON.stringify({
       model: config.model,
       messages,

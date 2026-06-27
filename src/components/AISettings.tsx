@@ -7,7 +7,7 @@ interface Props {
 }
 
 const PROVIDERS: { id: AIConfig["provider"]; label: string; models: string[] }[] = [
-  { id: "mimo", label: "Xiaomi MiMo", models: ["MiMo-V2.5"] },
+  { id: "mimo", label: "Xiaomi MiMo", models: ["mimo-v2.5-pro"] },
   { id: "openai", label: "OpenAI", models: ["gpt-4o-mini", "gpt-4o"] },
   { id: "gemini", label: "Google Gemini", models: ["gemini-2.5-flash"] },
 ];
@@ -15,7 +15,7 @@ const PROVIDERS: { id: AIConfig["provider"]; label: string; models: string[] }[]
 export default function AISettings({ onConfigChange }: Props) {
   const [open, setOpen] = useState(false);
   const [provider, setProvider] = useState<AIConfig["provider"]>("mimo");
-  const [model, setModel] = useState("MiMo-V2.5");
+  const [model, setModel] = useState("mimo-v2.5-pro");
   const [apiKey, setApiKey] = useState("");
   const [saved, setSaved] = useState(false);
 
