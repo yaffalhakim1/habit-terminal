@@ -357,7 +357,7 @@ input, select { font-family: inherit; }
 
 .addform-row { display: flex; gap: var(--sp-xs); align-items: stretch; }
 
-.addform-field { margin-bottom: var(--sp-xs); }
+.addform-field { margin-bottom: var(--sp-md); }
 
 .addform-label {
   display: block;
@@ -365,12 +365,12 @@ input, select { font-family: inherit; }
   color: var(--fg2);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  margin-bottom: var(--sp-2xs);
+  margin-bottom: var(--sp-xs);
 }
 
 .addform-label::before { content: "// "; color: var(--fg3); }
 
-.addform-fieldset { border: none; padding: 0; margin: var(--sp-xs) 0; }
+.addform-fieldset { border: none; padding: 0; margin: var(--sp-sm) 0 var(--sp-md); }
 
 .addform-input {
   width: 100%;
@@ -378,8 +378,8 @@ input, select { font-family: inherit; }
   color: var(--fg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: var(--sp-xs) var(--sp-sm);
-  font-size: var(--fs-2xs);
+  padding: var(--sp-sm);
+  font-size: var(--fs-xs);
 }
 
 .addform-input:focus { border-color: var(--accent); }
@@ -430,18 +430,26 @@ input, select { font-family: inherit; }
 
 .addform-btn-danger:hover { background: var(--red); color: var(--bg); }
 
-.addform-grid { display: flex; flex-wrap: wrap; gap: var(--sp-xs); }
+.addform-grid { display: flex; flex-wrap: wrap; gap: var(--sp-sm); }
 
 .addform-icon-btn {
   border: 1px solid transparent;
   border-radius: var(--radius);
-  padding: var(--sp-2xs) var(--sp-xs);
-  font-size: var(--fs-sm);
+  padding: var(--sp-xs);
+  font-size: var(--fs-lg);
+  min-width: var(--tap);
+  min-height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .addform-icon-btn-active { background: var(--bg3); border-color: var(--accent); }
 
-.addform-actions { display: flex; flex-direction: column; gap: var(--sp-xs); margin-top: var(--sp-xs); }
+.addform-actions { display: flex; flex-direction: column; gap: var(--sp-sm); margin-top: var(--sp-md); }
+
+.edit-dialog-actions { display: flex; flex-direction: column; gap: var(--sp-sm); margin-top: var(--sp-lg); }
+.edit-dialog-row { display: flex; gap: var(--sp-sm); }
 
 /* ── Modal ────────────────────────────────────────── */
 .modal-overlay {
@@ -459,10 +467,10 @@ input, select { font-family: inherit; }
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: var(--sp-lg);
+  padding: var(--sp-xl);
   width: 100%;
   max-width: 22rem;
-  max-height: 80dvh;
+  max-height: 85dvh;
   overflow-y: auto;
 }
 
@@ -647,8 +655,8 @@ input, select { font-family: inherit; }
 /* ── ColorDot ─────────────────────────────────────── */
 .colordot {
   display: inline-block;
-  width: clamp(0.875rem, 0.75rem + 0.5vw, 1.125rem);
-  height: clamp(0.875rem, 0.75rem + 0.5vw, 1.125rem);
+  width: clamp(1rem, 0.875rem + 0.5vw, 1.375rem);
+  height: clamp(1rem, 0.875rem + 0.5vw, 1.375rem);
   border-radius: 50%;
   border: 1px solid var(--border);
   cursor: pointer;
