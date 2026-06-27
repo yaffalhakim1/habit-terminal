@@ -9,7 +9,7 @@ export interface AIConfig {
 }
 
 const PROVIDER_DEFAULTS: Record<AIConfig["provider"], { endpoint: string; model: string }> = {
-  mimo: { endpoint: "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions", model: "mimo-v2.5-pro" },
+  mimo: { endpoint: "https://api.xiaomimimo.com/v1/chat/completions", model: "mimo-v2.5-pro" },
   openai: { endpoint: "https://api.openai.com/v1/chat/completions", model: "gpt-4o-mini" },
   gemini: { endpoint: "https://generativelanguage.googleapis.com/v1beta/openai/", model: "gemini-2.5-flash" },
 };
