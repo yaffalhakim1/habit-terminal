@@ -448,8 +448,8 @@ input, select { font-family: inherit; }
 
 .addform-actions { display: flex; flex-direction: column; gap: var(--sp-sm); margin-top: var(--sp-md); }
 
-.edit-dialog-actions { display: flex; flex-direction: column; gap: var(--sp-sm); margin-top: var(--sp-lg); }
-.edit-dialog-row { display: flex; gap: var(--sp-sm); }
+.edit-dialog-actions { display: flex; flex-direction: column; gap: var(--sp-md); margin-top: var(--sp-xl); }
+.edit-dialog-row { display: flex; gap: var(--sp-md); }
 
 /* ── Modal ────────────────────────────────────────── */
 .modal-overlay {

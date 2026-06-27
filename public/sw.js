@@ -1,4 +1,4 @@
-const CACHE = "term-habits-v3";
+const CACHE = "term-habits-v4";
 const ASSETS = ["/habit-terminal/"];
 
 self.addEventListener("install", (e) => {

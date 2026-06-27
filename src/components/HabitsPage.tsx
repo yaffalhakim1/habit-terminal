@@ -30,6 +30,18 @@ export default function HabitsPage({ habits, history, player, onToggle, onEdit, 
       <StatsBar player={player} habits={habits} history={history} />
 
       <div className="sectionlabel">
+        <span className="sectionlabel-text">last 12 weeks</span>
+        <span className="sectionlabel-line" />
+      </div>
+      <Heatmap habits={habits} history={history} />
+
+      <button className="addform-btn addform-btn-secondary" style={{ width: "100%" }} onClick={() => setShowAdd(!showAdd)}>
+        {showAdd ? "[-] close" : "[+] new habit"}
+      </button>
+
+      <AddHabit open={showAdd} onClose={() => setShowAdd(false)} onAdd={onAddHabit} />
+
+      <div className="sectionlabel">
         <span className="sectionlabel-text">habits</span>
         <span className="sectionlabel-line" />
       </div>
@@ -49,18 +61,7 @@ export default function HabitsPage({ habits, history, player, onToggle, onEdit, 
         ))}
       </div>
 
-      <button className="addform-btn addform-btn-secondary" style={{ width: "100%", marginTop: "0.5rem" }} onClick={() => setShowAdd(!showAdd)}>
-        {showAdd ? "[-] close" : "[+] new habit"}
-      </button>
-
-      <AddHabit open={showAdd} onClose={() => setShowAdd(false)} onAdd={onAddHabit} />
       <EditHabit habit={editing} onClose={() => setEditing(null)} onSave={onEdit} onDelete={onDelete} />
-
-      <div className="sectionlabel">
-        <span className="sectionlabel-text">last 12 weeks</span>
-        <span className="sectionlabel-line" />
-      </div>
-      <Heatmap habits={habits} history={history} />
     </>
   );
 }
