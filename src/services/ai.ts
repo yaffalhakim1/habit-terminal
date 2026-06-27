@@ -89,13 +89,7 @@ async function callProvider(config: AIConfig, messages: ChatMessage[]): Promise<
     return data.candidates?.[0]?.content?.parts?.[0]?.text || "";
   }
 
-  const isMimo = config.provider === "mimo";
-  const headers: Record<string, string> = { "Content-Type": "application/json" };
-  if (isMimo) {
-    headers["api-key"] = config.apiKey;
-  } else {
-    headers["Authorization"] = `Bearer ${config.apiKey}`;
-  }
+  const headers: Record<string, string> = { "Content-Type": "application/json", Authorization: `Bearer ${config.apiKey}` };
 
   const res = await fetch(provider.endpoint, {
     method: "POST",
