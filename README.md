@@ -1,32 +1,49 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img src="public/og-image.png" alt="term.habits — Terminal Habit Tracker" width="100%" />
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+<h1 align="center">$ term.habits</h1>
 
-Currently, two official plugins are available:
+<p align="center">
+  <i>// terminal habit tracker with RPG leveling</i>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+<p align="center">
+  <a href="https://yaffalhakim1.github.io/habit-terminal/">Live Demo</a> · No account needed · Works offline · PWA
+</p>
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+A monospace, terminal-themed habit tracker with gamified RPG progression. Build habits, track streaks, level up your character — all in a dark, minimal interface.
 
-## Expanding the Oxlint configuration
+## Features
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- **15 themes** — Nothing Orange, Tokyo Night, Dracula, Nord, Gruvbox, Catppuccin Mocha, and more
+- **RPG leveling** — Earn XP from habits, level up, lose HP for missed days
+- **Streaks** — Track consecutive completions, earn fire badges
+- **Heatmap** — GitHub-style 12-week activity grid
+- **Edit habits** — Tap any habit to edit name, icon, color, schedule
+- **PWA** — Install on your phone, works offline
+- **No account** — All data stays in your browser (localStorage)
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## Tech Stack
+
+- React 19 + TypeScript
+- Vite
+- CSS custom properties (no framework)
+- localStorage persistence
+
+## Getting Started
+
+```bash
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Deploy
+
+Push to `master` — GitHub Actions auto-deploys to GitHub Pages.
+
+## License
+
+MIT
