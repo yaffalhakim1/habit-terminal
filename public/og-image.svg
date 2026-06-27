@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#000"/>
+  <!-- border -->
+  <rect x="40" y="30" width="1120" height="570" rx="12" fill="none" stroke="#222" stroke-width="2"/>
+  <!-- title -->
+  <text x="80" y="100" font-family="monospace" font-size="48" font-weight="bold" fill="#ff6d00">$ term.habits</text>
+  <text x="80" y="140" font-family="monospace" font-size="18" fill="#666">// terminal habit tracker with RPG leveling</text>
+  <!-- stats row -->
+  <text x="80" y="200" font-family="monospace" font-size="16" fill="#999">lv 5</text>
+  <text x="160" y="200" font-family="monospace" font-size="16" fill="#2979ff">342 xp</text>
+  <text x="280" y="200" font-family="monospace" font-size="16" fill="#ff6d00">50/75 hp</text>
+  <text x="440" y="200" font-family="monospace" font-size="16" fill="#e0af68">🔥 12 days</text>
+  <!-- progress bar -->
+  <text x="80" y="250" font-family="monospace" font-size="14" fill="#ff6d00">████████████░░░░░░░░</text>
+  <text x="420" y="250" font-family="monospace" font-size="14" fill="#666">60% [3/5]</text>
+  <!-- habit items -->
+  <text x="80" y="300" font-family="monospace" font-size="16" fill="#ff6d00">[✓]</text>
+  <text x="130" y="300" font-family="monospace" font-size="16" fill="#9ece6a">Walking</text>
+  <text x="310" y="300" font-family="monospace" font-size="14" fill="#e0af68">🔥 7</text>
+  <text x="400" y="300" font-family="monospace" font-size="14" fill="#666">+10xp</text>
+
+  <text x="80" y="340" font-family="monospace" font-size="16" fill="#ff6d00">[✓]</text>
+  <text x="130" y="340" font-family="monospace" font-size="16" fill="#7aa2f7">Solat 5 Waktu</text>
+  <text x="380" y="340" font-family="monospace" font-size="14" fill="#e0af68">🔥 1</text>
+
+  <text x="80" y="380" font-family="monospace" font-size="16" fill="#ff6d00">[ ]</text>
+  <text x="130" y="380" font-family="monospace" font-size="16" fill="#7dcfff">Learn something</text>
+  <text x="400" y="380" font-family="monospace" font-size="14" fill="#666">+20xp</text>
+
+  <text x="80" y="420" font-family="monospace" font-size="16" fill="#ff6d00">[ ]</text>
+  <text x="130" y="420" font-family="monospace" font-size="16" fill="#e0af68">Dumbbell chest press</text>
+  <text x="460" y="420" font-family="monospace" font-size="14" fill="#666">mon · thu</text>
+  <text x="620" y="420" font-family="monospace" font-size="14" fill="#666">+20xp</text>
+
+  <text x="80" y="460" font-family="monospace" font-size="16" fill="#ff6d00">[ ]</text>
+  <text x="130" y="460" font-family="monospace" font-size="16" fill="#e0af68">Push-ups</text>
+  <text x="310" y="460" font-family="monospace" font-size="14" fill="#666">tue · fri</text>
+  <!-- heatmap -->
+  <text x="700" y="200" font-family="monospace" font-size="14" fill="#666">// last 12 weeks</text>
+  <g transform="translate(700, 215)">
+    <!-- row 1 -->
+    <rect width="10" height="10" rx="1" fill="#1a1a1a" x="0" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="13" y="0" opacity="0.25"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="26" y="0" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="39" y="0" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="52" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#1a1a1a" x="65" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="78" y="0" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="91" y="0" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="104" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="117" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#1a1a1a" x="130" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="143" y="0" opacity="0.25"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="156" y="0" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="169" y="0" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="182" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="195" y="0" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="208" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="221" y="0" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="234" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="247" y="0" opacity="0.25"/>
+    <rect width="10" height="10" rx="1" fill="#1a1a1a" x="260" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="273" y="0" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="286" y="0" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="299" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="312" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#1a1a1a" x="325" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="338" y="0" opacity="0.25"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="351" y="0" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="364" y="0"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="377" y="0" opacity="0.5"/>
+    <!-- rows 2-7 simplified -->
+    <rect width="387" height="10" rx="1" fill="#1a1a1a" x="0" y="13"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="39" y="13" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="104" y="13" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="221" y="13"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="299" y="13" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="364" y="13" opacity="0.75"/>
+
+    <rect width="387" height="10" rx="1" fill="#1a1a1a" x="0" y="26"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="26" y="26"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="78" y="26" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="182" y="26" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="273" y="26"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="351" y="26" opacity="0.25"/>
+
+    <rect width="387" height="10" rx="1" fill="#1a1a1a" x="0" y="39"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="13" y="39" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="91" y="39"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="156" y="39" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="247" y="39" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="338" y="39"/>
+
+    <rect width="387" height="10" rx="1" fill="#1a1a1a" x="0" y="52"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="52" y="52" opacity="0.25"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="130" y="52" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="208" y="52" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="312" y="52"/>
+
+    <rect width="387" height="10" rx="1" fill="#1a1a1a" x="0" y="65"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="65" y="65" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="143" y="65" opacity="0.75"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="234" y="65"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="325" y="65" opacity="0.25"/>
+
+    <rect width="387" height="10" rx="1" fill="#1a1a1a" x="0" y="78"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="104" y="78"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="195" y="78" opacity="0.5"/>
+    <rect width="10" height="10" rx="1" fill="#ff6d00" x="286" y="78" opacity="0.75"/>
+  </g>
+  <!-- theme labels -->
+  <text x="700" y="340" font-family="monospace" font-size="14" fill="#666">// 15 themes: nothing orange, tokyo night, dracula, nord...</text>
+  <text x="700" y="370" font-family="monospace" font-size="14" fill="#666">// no account • works offline • PWA</text>
+  <!-- bottom bar -->
+  <text x="80" y="560" font-family="monospace" font-size="14" fill="#333">yaffalhakim1.github.io/habit-terminal</text>
+</svg>
