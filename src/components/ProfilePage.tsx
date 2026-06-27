@@ -1,19 +1,24 @@
 import type { ThemeName, PlayerState } from "../types";
 import { THEMES, ACHIEVEMENTS } from "../constants";
+import type { AIConfig } from "../services/ai";
+import AISettings from "./AISettings";
 
 interface Props {
   theme: ThemeName;
   onThemeChange: (t: ThemeName) => void;
   player: PlayerState;
   onReset: () => void;
+  onAIConfigChange: (config: AIConfig | null) => void;
 }
 
-export default function ProfilePage({ theme, onThemeChange, player, onReset }: Props) {
+export default function ProfilePage({ theme, onThemeChange, player, onReset, onAIConfigChange }: Props) {
   const darkThemes = Object.values(THEMES).filter(t => t.dark);
   const lightThemes = Object.values(THEMES).filter(t => !t.dark);
 
   return (
     <div className="profilepage">
+      <AISettings onConfigChange={onAIConfigChange} />
+
       <div className="profilepage-section">
         <div className="profilepage-section-title">achievements</div>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
@@ -77,8 +82,8 @@ export default function ProfilePage({ theme, onThemeChange, player, onReset }: P
           </div>
         </div>
         <button
-          className="addform-btn"
-          style={{ background: "var(--red)", marginTop: "0.5rem", width: "100%" }}
+          className="addform-btn addform-btn-danger"
+          style={{ marginTop: "0.5rem", width: "100%" }}
           onClick={onReset}
         >
           [rst] reset all data

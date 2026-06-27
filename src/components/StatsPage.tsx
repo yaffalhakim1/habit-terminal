@@ -2,14 +2,16 @@ import { useMemo } from "react";
 import type { PlayerState, Habit, DayLog } from "../types";
 import { calcStreak, calcDayOfWeekStats } from "../store";
 import DayChart from "./DayChart";
+import ReflectView from "./ReflectView";
 
 interface Props {
   player: PlayerState;
   habits: Habit[];
   history: Record<string, DayLog>;
+  hasAI: boolean;
 }
 
-export default function StatsPage({ player, habits, history }: Props) {
+export default function StatsPage({ player, habits, history, hasAI }: Props) {
   const streak = useMemo(() => calcStreak(habits, history), [habits, history]);
   const dayStats = useMemo(() => calcDayOfWeekStats(habits, history), [habits, history]);
 
@@ -117,6 +119,13 @@ export default function StatsPage({ player, habits, history }: Props) {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {hasAI && habits.length > 0 && (
+        <div className="statspage-section">
+          <div className="statspage-section-title">AI reflection</div>
+          <ReflectView player={player} habits={habits} history={history} />
         </div>
       )}
     </div>

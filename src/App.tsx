@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import type { Tab, ThemeName, Habit, StoreState } from "./types";
 import { THEMES, ACHIEVEMENTS } from "./constants";
 import { loadState, saveState, resetState, todayKey, xpToNext, calcStreak } from "./store";
+import { loadAIConfig } from "./services/ai";
 import TopBar from "./components/TopBar";
 import TabNav from "./components/TabNav";
 import HabitsPage from "./components/HabitsPage";
@@ -27,6 +28,7 @@ export default function App() {
   const [tab, setTab] = useState<Tab>("habits");
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" | "info" } | null>(null);
   const [modal, setModal] = useState<{ title: string; body: string; onConfirm: () => void } | null>(null);
+  const [hasAI, setHasAI] = useState<boolean>(() => loadAIConfig() !== null);
 
   const persist = useCallback((next: StoreState) => {
     setState(next);
@@ -175,8 +177,8 @@ export default function App() {
           onAddHabit={handleAddHabit}
         />
       )}
-      {tab === "stats" && <StatsPage player={state.player} habits={state.habits} history={state.history} />}
-      {tab === "profile" && <ProfilePage theme={state.theme} onThemeChange={handleThemeChange} player={state.player} onReset={handleReset} />}
+      {tab === "stats" && <StatsPage player={state.player} habits={state.habits} history={state.history} hasAI={hasAI} />}
+      {tab === "profile" && <ProfilePage theme={state.theme} onThemeChange={handleThemeChange} player={state.player} onReset={handleReset} onAIConfigChange={(c) => setHasAI(c !== null)} />}
 
       <Toast show={!!toast} msg={toast?.msg || ""} type={toast?.type || "info"} />
       {modal && <ConfirmModal title={modal.title} body={modal.body} onConfirm={modal.onConfirm} onCancel={() => setModal(null)} />}
