@@ -134,11 +134,34 @@ function defaultData(): StoreState {
     h("pu", "Push-ups", "💪", "medium", "#e0af68", "tue · fri", 0),
   ];
 
+  // Seeded from real Habitica history
+  const history: Record<string, DayLog> = {
+    "2025-12-10": { done: ["ls", "gs"], counters: {} },
+    "2025-12-11": { done: ["cc", "br"], counters: {} },
+    "2025-12-15": { done: ["cc", "br", "w"], counters: {} },
+    "2025-12-16": { done: ["gs", "fp", "pl", "w"], counters: {} },
+    "2025-12-17": { done: ["dt", "dr", "rt"], counters: {} },
+    "2025-12-18": { done: ["cc", "br"], counters: {} },
+    "2025-12-19": { done: ["dt", "dr", "rt"], counters: {} },
+    "2025-12-20": { done: ["cc", "br", "w"], counters: {} },
+    "2025-12-22": { done: ["cc", "br", "sp", "bc"], counters: {} },
+    "2025-12-23": { done: ["w"], counters: {} },
+    "2025-12-24": { done: ["gs", "fp", "pl"], counters: {} },
+    "2025-12-25": { done: ["cc", "br", "sp", "bc"], counters: {} },
+    "2025-12-29": { done: ["cc", "br", "sp", "bc", "w"], counters: {} },
+    "2025-12-30": { done: ["dt", "w"], counters: {} },
+    "2026-01-01": { done: ["cc", "br", "sp", "ls"], counters: {} },
+    "2026-01-05": { done: ["cc", "br", "sp", "bc"], counters: {} },
+    "2026-01-26": { done: ["ls"], counters: {} },
+    "2026-01-30": { done: ["ls", "w"], counters: {} },
+    "2026-06-27": { done: ["cc", "br", "ls"], counters: {} },
+  };
+
   return {
     player: DEFAULT_PLAYER,
     habits,
     routines: [],
-    history: {},
+    history,
     theme: "nothing-orange",
   };
 }
