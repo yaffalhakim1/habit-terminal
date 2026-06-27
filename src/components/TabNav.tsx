@@ -1,4 +1,3 @@
-import React from "react";
 import type { Tab } from "../types";
 
 interface Props {
@@ -12,12 +11,14 @@ const TABS: { id: Tab; label: string }[] = [
   { id: "profile", label: "profile" },
 ];
 
-const TabNav = React.memo(function TabNav({ active, onChange }: Props) {
+export default function TabNav({ active, onChange }: Props) {
   return (
-    <nav className="tabnav">
+    <nav className="tabnav" role="tablist" aria-label="Navigation">
       {TABS.map(t => (
         <button
           key={t.id}
+          role="tab"
+          aria-selected={active === t.id}
           className={`tabnav-tab ${active === t.id ? "tabnav-tab-active" : ""}`}
           onClick={() => onChange(t.id)}
         >
@@ -26,6 +27,4 @@ const TabNav = React.memo(function TabNav({ active, onChange }: Props) {
       ))}
     </nav>
   );
-});
-
-export default TabNav;
+}

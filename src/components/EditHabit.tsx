@@ -6,9 +6,10 @@ interface Props {
   habit: Habit | null;
   onClose: () => void;
   onSave: (id: string, updates: Partial<Habit>) => void;
+  onDelete: (id: string) => void;
 }
 
-export default function EditHabit({ habit, onClose, onSave }: Props) {
+export default function EditHabit({ habit, onClose, onSave, onDelete }: Props) {
   const [name, setName] = useState(habit?.name || "");
   const [color, setColor] = useState(habit?.color || HABIT_COLORS[0]);
   const [icon, setIcon] = useState(habit?.icon || ICONS[0]);
@@ -22,6 +23,11 @@ export default function EditHabit({ habit, onClose, onSave }: Props) {
     onClose();
   };
 
+  const handleDelete = () => {
+    onDelete(habit.id);
+    onClose();
+  };
+
   const handleKey = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") handleSave();
     if (e.key === "Escape") onClose();
@@ -30,59 +36,69 @@ export default function EditHabit({ habit, onClose, onSave }: Props) {
   return (
     <div className="addform">
       <div className="addform-title">edit habit</div>
-      <input
-        className="addform-input"
-        value={name}
-        onChange={e => setName(e.target.value)}
-        onKeyDown={handleKey}
-        placeholder="$ habit name"
-        maxLength={40}
-        autoFocus
-      />
-      <input
-        className="addform-input"
-        value={schedule}
-        onChange={e => setSchedule(e.target.value)}
-        onKeyDown={handleKey}
-        placeholder="$ schedule (e.g. mon · thu)"
-      />
-      <div>
-        <div className="addform-title" style={{ marginBottom: "0.25rem" }}>icon</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem" }}>
+      <div className="addform-field">
+        <label className="addform-label" htmlFor="edit-name">name</label>
+        <input
+          id="edit-name"
+          className="addform-input"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          onKeyDown={handleKey}
+          placeholder="$ habit name"
+          maxLength={40}
+          autoFocus
+        />
+      </div>
+      <div className="addform-field">
+        <label className="addform-label" htmlFor="edit-schedule">schedule</label>
+        <input
+          id="edit-schedule"
+          className="addform-input"
+          value={schedule}
+          onChange={e => setSchedule(e.target.value)}
+          onKeyDown={handleKey}
+          placeholder="$ e.g. mon · thu"
+        />
+      </div>
+      <fieldset className="addform-fieldset">
+        <legend className="addform-label">icon</legend>
+        <div className="addform-grid">
           {ICONS.map(i => (
             <button
               key={i}
-              style={{
-                background: icon === i ? "var(--bg3)" : "transparent",
-                border: icon === i ? "1px solid var(--accent)" : "1px solid transparent",
-                borderRadius: "var(--radius)",
-                padding: "0.125rem 0.25rem",
-                fontSize: "0.875rem",
-                cursor: "pointer",
-              }}
+              type="button"
+              className={`addform-icon-btn ${icon === i ? "addform-icon-btn-active" : ""}`}
               onClick={() => setIcon(i)}
+              aria-label={`Icon ${i}`}
+              aria-pressed={icon === i}
             >
               {i}
             </button>
           ))}
         </div>
-      </div>
-      <div>
-        <div className="addform-title" style={{ marginBottom: "0.25rem" }}>color</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem" }}>
+      </fieldset>
+      <fieldset className="addform-fieldset">
+        <legend className="addform-label">color</legend>
+        <div className="addform-grid">
           {HABIT_COLORS.map(c => (
             <button
               key={c}
+              type="button"
               className={`colordot ${color === c ? "colordot-active" : ""}`}
-              style={{ background: c, width: "1rem", height: "1rem", borderRadius: "50%", border: "none", cursor: "pointer" }}
+              style={{ background: c }}
               onClick={() => setColor(c)}
+              aria-label={`Color ${c}`}
+              aria-pressed={color === c}
             />
           ))}
         </div>
-      </div>
-      <div className="addform-row" style={{ marginTop: "0.25rem" }}>
-        <button className="addform-btn" onClick={handleSave}>[enter] save</button>
-        <button className="addform-btn addform-btn-secondary" onClick={onClose}>[esc] cancel</button>
+      </fieldset>
+      <div className="addform-actions">
+        <div className="addform-row">
+          <button className="addform-btn" onClick={handleSave}>[enter] save</button>
+          <button className="addform-btn addform-btn-secondary" onClick={onClose}>[esc] cancel</button>
+        </div>
+        <button className="addform-btn addform-btn-danger" onClick={handleDelete}>[del] delete habit</button>
       </div>
     </div>
   );

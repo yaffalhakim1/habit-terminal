@@ -146,14 +146,6 @@ export default function App() {
     showToast("[ok] habit updated");
   }, [state, persist, showToast]);
 
-  const handleAddRoutine = useCallback((r: { name: string; icon: string; habitIds: string[] }) => {
-    const newR = { ...r, id: Date.now().toString(36), createdAt: Date.now() };
-    const habits = state.habits.map((h: Habit) => r.habitIds.includes(h.id) ? { ...h, routineId: newR.id } : h);
-    const next = { ...state, habits, routines: [...state.routines, newR] };
-    persist(next);
-    showToast(`[ok] routine "${r.name}" created`);
-  }, [state, persist, showToast]);
-
   const handleReset = useCallback(() => {
     setModal({
       title: "reset all data?",
@@ -175,14 +167,12 @@ export default function App() {
       {tab === "habits" && (
         <HabitsPage
           habits={state.habits}
-          routines={state.routines}
           history={state.history}
           player={state.player}
           onToggle={handleToggle}
           onEdit={handleEditHabit}
           onDelete={handleDeleteHabit}
           onAddHabit={handleAddHabit}
-          onAddRoutine={handleAddRoutine}
         />
       )}
       {tab === "stats" && <StatsPage player={state.player} habits={state.habits} history={state.history} />}
