@@ -1,14 +1,18 @@
 {
-  "name": "term.habits",
+  "name": "term.habits — Terminal Habit Tracker",
   "short_name": "term.habits",
-  "description": "terminal-themed habit tracker with RPG leveling",
+  "description": "Monospace habit tracker with RPG leveling. Build habits, track streaks, level up. No account needed, works offline.",
   "start_url": "/habit-terminal/",
+  "scope": "/habit-terminal/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "orientation": "portrait",
+  "categories": ["productivity", "lifestyle"],
   "icons": [
-    { "src": "/habit-terminal/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/habit-terminal/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/habit-terminal/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/habit-terminal/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/habit-terminal/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/habit-terminal/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

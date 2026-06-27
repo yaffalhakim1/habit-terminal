@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://yaffalhakim1.github.io/habit-terminal/sitemap.xml
