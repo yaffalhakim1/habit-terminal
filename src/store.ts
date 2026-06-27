@@ -101,67 +101,22 @@ export interface StoreState {
 }
 
 const DEFAULT_PLAYER: PlayerState = {
-  level: 5,
-  xp: 32,
+  level: 1,
+  xp: 0,
   hp: 50,
-  maxHp: 75,
+  maxHp: 50,
   bestStreak: 0,
-  totalCompletions: 52,
-  achievements: ["init"],
-  createdAt: new Date("2024-10-01").getTime(),
+  totalCompletions: 0,
+  achievements: [],
+  createdAt: Date.now(),
 };
 
-function h(id: string, name: string, icon: string, diff: "easy"|"medium"|"hard", color: string, schedule?: string, streak?: number): Habit {
-  const xpMap = { easy: 10, medium: 20, hard: 40 };
-  return { id, name, icon, type: "checkbox", difficulty: diff, color, xp: xpMap[diff], streak: streak || 0, schedule, createdAt: Date.now() };
-}
-
 function defaultData(): StoreState {
-  const habits: Habit[] = [
-    h("w", "Walking", "🚶", "easy", "#9ece6a", undefined, 7),
-    h("s", "Solat 5 Waktu", "🕌", "medium", "#7aa2f7", undefined, 1),
-    h("ls", "Learn something", "📚", "medium", "#7dcfff", undefined, 5),
-    h("cc", "Dumbbell chest press", "🏋️", "medium", "#9ece6a", "mon · thu", 10),
-    h("br", "Dumbbell bent-over rows", "🏋️", "medium", "#9ece6a", "mon · thu", 10),
-    h("sp", "Dumbbell shoulder press", "🏋️", "medium", "#e0af68", "mon · thu", 5),
-    h("bc", "Dumbbell bicep curls", "💪", "easy", "#e0af68", "mon · thu", 4),
-    h("gs", "Dumbbell goblet squats", "🦵", "medium", "#e0af68", "wed", 3),
-    h("fp", "Dumbbell floor press", "🏋️", "medium", "#e0af68", "wed", 2),
-    h("pl", "Plank hold: 3 sets of 45 seconds", "⏱️", "hard", "#e0af68", "wed", 2),
-    h("dt", "Dumbbell thrusters", "🏋️", "hard", "#e0af68", "tue · fri", 3),
-    h("dr", "Dumbbell renegade rows", "💪", "hard", "#e0af68", "tue · fri", 2),
-    h("rt", "Russians twist", "🔄", "medium", "#e0af68", "tue · fri", 2),
-    h("pu", "Push-ups", "💪", "medium", "#e0af68", "tue · fri", 0),
-  ];
-
-  // Seeded from real Habitica history
-  const history: Record<string, DayLog> = {
-    "2025-12-10": { done: ["ls", "gs"], counters: {} },
-    "2025-12-11": { done: ["cc", "br"], counters: {} },
-    "2025-12-15": { done: ["cc", "br", "w"], counters: {} },
-    "2025-12-16": { done: ["gs", "fp", "pl", "w"], counters: {} },
-    "2025-12-17": { done: ["dt", "dr", "rt"], counters: {} },
-    "2025-12-18": { done: ["cc", "br"], counters: {} },
-    "2025-12-19": { done: ["dt", "dr", "rt"], counters: {} },
-    "2025-12-20": { done: ["cc", "br", "w"], counters: {} },
-    "2025-12-22": { done: ["cc", "br", "sp", "bc"], counters: {} },
-    "2025-12-23": { done: ["w"], counters: {} },
-    "2025-12-24": { done: ["gs", "fp", "pl"], counters: {} },
-    "2025-12-25": { done: ["cc", "br", "sp", "bc"], counters: {} },
-    "2025-12-29": { done: ["cc", "br", "sp", "bc", "w"], counters: {} },
-    "2025-12-30": { done: ["dt", "w"], counters: {} },
-    "2026-01-01": { done: ["cc", "br", "sp", "ls"], counters: {} },
-    "2026-01-05": { done: ["cc", "br", "sp", "bc"], counters: {} },
-    "2026-01-26": { done: ["ls"], counters: {} },
-    "2026-01-30": { done: ["ls", "w"], counters: {} },
-    "2026-06-27": { done: ["cc", "br", "ls"], counters: {} },
-  };
-
   return {
     player: DEFAULT_PLAYER,
-    habits,
+    habits: [],
     routines: [],
-    history,
+    history: {},
     theme: "nothing-orange",
   };
 }
