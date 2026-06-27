@@ -45,7 +45,6 @@ export default function HabitsPage({ habits, history, player, onToggle, onEdit, 
             counter={hist.counters?.[h.id]}
             onToggle={() => onToggle(h.id)}
             onEdit={() => setEditing(h)}
-            onDelete={() => onDelete(h.id)}
           />
         ))}
       </div>

@@ -6,15 +6,14 @@ interface Props {
   counter?: number;
   onToggle: () => void;
   onEdit: () => void;
-  onDelete: () => void;
 }
 
 export default function HabitItem({ habit, done, counter, onToggle, onEdit }: Props) {
   return (
-    <div className={`habit ${done ? "habit-done" : ""}`}>
+    <div className={`habit ${done ? "habit-done" : ""}`} onClick={onEdit}>
       <button
         className="habit-check"
-        onClick={onToggle}
+        onClick={e => { e.stopPropagation(); onToggle(); }}
         aria-label={done ? `Undo ${habit.name}` : `Complete ${habit.name}`}
       >
         <span className="habit-check-mark">✓</span>
@@ -33,9 +32,6 @@ export default function HabitItem({ habit, done, counter, onToggle, onEdit }: Pr
         🔥{habit.streak}
       </span>
       <span className="habit-xp">+{habit.xp}xp</span>
-      <button className="habit-edit-btn" onClick={onEdit} aria-label={`Edit ${habit.name}`}>
-        ✎
-      </button>
     </div>
   );
 }
