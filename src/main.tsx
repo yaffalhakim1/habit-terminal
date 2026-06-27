@@ -9,6 +9,9 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
+// Unregister stale service worker — was causing cache issues
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/habit-terminal/sw.js").catch(() => {});
+  navigator.serviceWorker.getRegistrations().then(regs =>
+    regs.forEach(r => r.unregister())
+  );
 }

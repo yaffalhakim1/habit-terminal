@@ -18,7 +18,13 @@ export function loadAIConfig(): AIConfig | null {
   try {
     const raw = localStorage.getItem(AI_STORAGE_KEY);
     if (!raw) return null;
-    return JSON.parse(raw);
+    const config = JSON.parse(raw);
+    // Force correct model name for mimo (fix stale localStorage)
+    if (config.provider === "mimo") {
+      config.model = "mimo-v2.5-pro";
+      config.endpoint = PROVIDER_DEFAULTS.mimo.endpoint;
+    }
+    return config;
   } catch {
     return null;
   }
