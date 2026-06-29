@@ -60,6 +60,10 @@ Bring your own API key for AI-powered weekly reports:
 - localStorage persistence
 - Habitica API v3
 
+## Privacy
+
+**Your keys never leave your browser.** API keys (Habitica, AI providers) are stored in `localStorage` only — they are never sent to any server, never logged, never included in the codebase. The app runs 100% client-side. No backend, no analytics, no tracking.
+
 ## Getting Started
 
 ```bash
