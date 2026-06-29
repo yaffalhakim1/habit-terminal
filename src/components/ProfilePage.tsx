@@ -1,23 +1,34 @@
 import type { ThemeName, PlayerState } from "../types";
 import { THEMES, ACHIEVEMENTS } from "../constants";
-import type { AIConfig } from "../services/ai";
 import AISettings from "./AISettings";
+import HabiticaSettings from "./HabiticaSettings";
 
 interface Props {
   theme: ThemeName;
   onThemeChange: (t: ThemeName) => void;
   player: PlayerState;
   onReset: () => void;
-  onAIConfigChange: (config: AIConfig | null) => void;
+  onAIConfigChange: (config: boolean) => void;
+  onHabiticaConnect: () => void;
+  onHabiticaDisconnect: () => void;
+  habiticaConnected: boolean;
 }
 
-export default function ProfilePage({ theme, onThemeChange, player, onReset, onAIConfigChange }: Props) {
+export default function ProfilePage({
+  theme, onThemeChange, player, onReset,
+  onAIConfigChange, onHabiticaConnect, onHabiticaDisconnect, habiticaConnected,
+}: Props) {
   const darkThemes = Object.values(THEMES).filter(t => t.dark);
   const lightThemes = Object.values(THEMES).filter(t => !t.dark);
 
   return (
     <div className="profilepage">
-      <AISettings onConfigChange={onAIConfigChange} />
+      <AISettings onConfigChange={(c) => onAIConfigChange(c !== null)} />
+      <HabiticaSettings
+        connected={habiticaConnected}
+        onConnect={onHabiticaConnect}
+        onDisconnect={onHabiticaDisconnect}
+      />
 
       <div className="profilepage-section">
         <div className="profilepage-section-title">achievements</div>

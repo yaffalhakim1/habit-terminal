@@ -31,6 +31,7 @@ export interface Habit {
   streak: number;
   goal?: number;
   schedule?: string;
+  habiticaId?: string;
   createdAt: number;
 }
 

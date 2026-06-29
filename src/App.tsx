@@ -3,6 +3,8 @@ import type { Tab, ThemeName, Habit, StoreState } from "./types";
 import { THEMES, ACHIEVEMENTS } from "./constants";
 import { loadState, saveState, resetState, todayKey, xpToNext, calcStreak } from "./store";
 import { loadAIConfig } from "./services/ai";
+import { isHabiticaConnected } from "./services/sync";
+import { syncToggle } from "./services/sync";
 import TopBar from "./components/TopBar";
 import TabNav from "./components/TabNav";
 import HabitsPage from "./components/HabitsPage";
@@ -29,6 +31,7 @@ export default function App() {
   const [toast, setToast] = useState<{ msg: string; type: "success" | "error" | "info" } | null>(null);
   const [modal, setModal] = useState<{ title: string; body: string; onConfirm: () => void } | null>(null);
   const [hasAI, setHasAI] = useState<boolean>(() => loadAIConfig() !== null);
+  const [habiticaConnected, setHabiticaConnected] = useState<boolean>(() => isHabiticaConnected());
 
   const persist = useCallback((next: StoreState) => {
     setState(next);
@@ -89,11 +92,15 @@ export default function App() {
             player.maxHp = 50 + player.level * 5;
             player.hp = player.maxHp;
           }
+          // Fire-and-forget sync to Habitica
+          syncToggle(habit, "up");
         } else {
           day.done.splice(idx, 1);
           habit = { ...habit, streak: Math.max(0, habit.streak - 1) };
           player.xp = Math.max(0, player.xp - habit.xp);
           player.totalCompletions = Math.max(0, player.totalCompletions - 1);
+          // Fire-and-forget sync undo to Habitica
+          syncToggle(habit, "down");
         }
       }
 
@@ -120,6 +127,17 @@ export default function App() {
     const next = { ...state, habits: [...state.habits, newH] };
     persist(next);
     showToast(`[ok] "${h.name}" added`);
+  }, [state, persist, showToast]);
+
+  const handleImportHabits = useCallback((habits: Omit<Habit, "id" | "createdAt">[]) => {
+    const newHabits = habits.map((h) => ({
+      ...h,
+      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      createdAt: Date.now(),
+    }));
+    const next = { ...state, habits: [...state.habits, ...newHabits] };
+    persist(next);
+    showToast(`[ok] imported ${newHabits.length} habits from Habitica`);
   }, [state, persist, showToast]);
 
   const handleDeleteHabit = useCallback((id: string) => {
@@ -161,6 +179,8 @@ export default function App() {
     });
   }, [showToast]);
 
+  const habiticaIds = new Set(state.habits.filter(h => h.habiticaId).map(h => h.habiticaId!));
+
   return (
     <div className="app">
       <TopBar theme={state.theme} onThemeChange={handleThemeChange} onReset={handleReset} />
@@ -175,10 +195,24 @@ export default function App() {
           onEdit={handleEditHabit}
           onDelete={handleDeleteHabit}
           onAddHabit={handleAddHabit}
+          onImportHabits={handleImportHabits}
+          habiticaConnected={habiticaConnected}
+          habiticaIds={habiticaIds}
         />
       )}
       {tab === "stats" && <StatsPage player={state.player} habits={state.habits} history={state.history} hasAI={hasAI} />}
-      {tab === "profile" && <ProfilePage theme={state.theme} onThemeChange={handleThemeChange} player={state.player} onReset={handleReset} onAIConfigChange={(c) => setHasAI(c !== null)} />}
+      {tab === "profile" && (
+        <ProfilePage
+          theme={state.theme}
+          onThemeChange={handleThemeChange}
+          player={state.player}
+          onReset={handleReset}
+          onAIConfigChange={(c) => setHasAI(c !== null)}
+          onHabiticaConnect={() => setHabiticaConnected(true)}
+          onHabiticaDisconnect={() => setHabiticaConnected(false)}
+          habiticaConnected={habiticaConnected}
+        />
+      )}
 
       <Toast show={!!toast} msg={toast?.msg || ""} type={toast?.type || "info"} />
       {modal && <ConfirmModal title={modal.title} body={modal.body} onConfirm={modal.onConfirm} onCancel={() => setModal(null)} />}

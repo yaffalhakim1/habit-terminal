@@ -6,6 +6,7 @@ import HabitItem from "./HabitItem";
 import Heatmap from "./Heatmap";
 import AddHabit from "./AddHabit";
 import EditHabit from "./EditHabit";
+import HabiticaImport from "./HabiticaImport";
 
 interface Props {
   habits: Habit[];
@@ -15,14 +16,21 @@ interface Props {
   onEdit: (id: string, updates: Partial<Habit>) => void;
   onDelete: (id: string) => void;
   onAddHabit: (h: Omit<Habit, "id" | "streak" | "createdAt">) => void;
+  onImportHabits: (habits: Omit<Habit, "id" | "createdAt">[]) => void;
+  habiticaConnected: boolean;
+  habiticaIds: Set<string>;
 }
 
-export default function HabitsPage({ habits, history, player, onToggle, onEdit, onDelete, onAddHabit }: Props) {
+export default function HabitsPage({
+  habits, history, player,
+  onToggle, onEdit, onDelete, onAddHabit,
+  onImportHabits, habiticaConnected, habiticaIds,
+}: Props) {
   const [showAdd, setShowAdd] = useState(false);
+  const [showImport, setShowImport] = useState(false);
   const [editing, setEditing] = useState<Habit | null>(null);
   const today = todayKey();
   const hist = history[today] || { done: [], counters: {} };
-
   const ungrouped = habits.filter(h => !h.routineId);
 
   return (
@@ -35,11 +43,24 @@ export default function HabitsPage({ habits, history, player, onToggle, onEdit, 
       </div>
       <Heatmap habits={habits} history={history} />
 
-      <button className="addform-btn addform-btn-secondary" style={{ width: "100%" }} onClick={() => setShowAdd(!showAdd)}>
-        {showAdd ? "[-] close" : "[+] new habit"}
-      </button>
+      <div style={{ display: "flex", gap: "var(--sp-xs)", margin: "var(--sp-sm) 0" }}>
+        <button className="addform-btn addform-btn-secondary" style={{ flex: 1 }} onClick={() => { setShowAdd(!showAdd); setShowImport(false); }}>
+          {showAdd ? "[-] close" : "[+] new habit"}
+        </button>
+        {habiticaConnected && (
+          <button className="addform-btn addform-btn-secondary" style={{ flex: 1 }} onClick={() => { setShowImport(!showImport); setShowAdd(false); }}>
+            {showImport ? "[-] close" : "[↓] import"}
+          </button>
+        )}
+      </div>
 
       <AddHabit open={showAdd} onClose={() => setShowAdd(false)} onAdd={onAddHabit} />
+      <HabiticaImport
+        open={showImport}
+        onClose={() => setShowImport(false)}
+        onImport={onImportHabits}
+        existingHabitIds={habiticaIds}
+      />
 
       <div className="sectionlabel">
         <span className="sectionlabel-text">habits</span>
