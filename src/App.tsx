@@ -126,22 +126,24 @@ export default function App() {
   const handleHabiticaSync = useCallback(async () => {
     try {
       const user = await fetchUser();
-      const next = {
-        ...state,
-        player: {
-          ...state.player,
-          level: user.stats.lvl,
-          xp: Math.round(user.stats.exp),
-          hp: Math.round(user.stats.hp),
-          maxHp: user.stats.maxHealth,
-        },
-      };
-      persist(next);
-      showToast("[ok] synced Habitica stats");
+      setState(prev => {
+        const next = {
+          ...prev,
+          player: {
+            ...prev.player,
+            level: user.stats.lvl,
+            xp: Math.round(user.stats.exp),
+            hp: Math.round(user.stats.hp),
+            maxHp: user.stats.maxHealth,
+          },
+        };
+        saveState(next);
+        return next;
+      });
     } catch (err) {
       console.warn("Habitica stats sync failed:", err);
     }
-  }, [state, persist, showToast]);
+  }, []);
 
   const handleAddHabit = useCallback((h: Omit<Habit, "id" | "streak" | "createdAt">) => {
     const newH: Habit = { ...h, id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), streak: 0, createdAt: Date.now() };
@@ -207,16 +209,20 @@ export default function App() {
   useEffect(() => {
     if (!isHabiticaConnected()) return;
     fetchUser().then(user => {
-      setState(prev => ({
-        ...prev,
-        player: {
-          ...prev.player,
-          level: user.stats.lvl,
-          xp: Math.round(user.stats.exp),
-          hp: Math.round(user.stats.hp),
-          maxHp: user.stats.maxHealth,
-        },
-      }));
+      setState(prev => {
+        const next = {
+          ...prev,
+          player: {
+            ...prev.player,
+            level: user.stats.lvl,
+            xp: Math.round(user.stats.exp),
+            hp: Math.round(user.stats.hp),
+            maxHp: user.stats.maxHealth,
+          },
+        };
+        saveState(next);
+        return next;
+      });
     }).catch(() => {});
   }, []);
 
