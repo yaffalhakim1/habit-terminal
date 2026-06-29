@@ -108,9 +108,19 @@ export default function HabiticaSettings({ onConnect, onDisconnect, connected }:
               </button>
             </>
           ) : (
-            <button className="addform-btn addform-btn-danger" onClick={handleDisconnect}>
-              [del] disconnect
-            </button>
+            <>
+              <div className="ai-notice" style={{ marginBottom: "var(--sp-sm)" }}>
+                <span className="ai-notice-icon">🔒</span>
+                <div>
+                  <div className="ai-notice-text">
+                    your key stays in this browser only — never sent to any server, never included in the codebase
+                  </div>
+                </div>
+              </div>
+              <button className="addform-btn addform-btn-danger" onClick={handleDisconnect}>
+                [del] disconnect
+              </button>
+            </>
           )}
         </div>
       )}
