@@ -152,13 +152,27 @@ export default function App() {
     showToast(`[ok] "${h.name}" added`);
   }, [state, persist, showToast]);
 
-  const handleImportHabits = useCallback((habits: Omit<Habit, "id" | "createdAt">[]) => {
-    const newHabits = habits.map((h) => ({
-      ...h,
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-      createdAt: Date.now(),
-    }));
-    const next = { ...state, habits: [...state.habits, ...newHabits] };
+  const handleImportHabits = useCallback((habits: Omit<Habit, "id" | "createdAt">[], remoteHistory: Record<string, { done: string[]; counters: Record<string, number> }>) => {
+    const idMap: Record<string, string> = {};
+    const newHabits = habits.map((h) => {
+      const newId = Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+      if (h.habiticaId) idMap[h.habiticaId] = newId;
+      return { ...h, id: newId, createdAt: Date.now() };
+    });
+
+    // Merge remote history: replace habiticaIds with local IDs
+    const mergedHistory = { ...state.history };
+    for (const [date, dayLog] of Object.entries(remoteHistory)) {
+      const localDone = dayLog.done.map(hid => idMap[hid]).filter(Boolean) as string[];
+      if (localDone.length === 0) continue;
+      if (!mergedHistory[date]) mergedHistory[date] = { done: [], counters: {} };
+      mergedHistory[date] = {
+        done: [...new Set([...(mergedHistory[date].done || []), ...localDone])],
+        counters: { ...mergedHistory[date].counters, ...dayLog.counters },
+      };
+    }
+
+    const next = { ...state, habits: [...state.habits, ...newHabits], history: mergedHistory };
     persist(next);
     showToast(`[ok] imported ${newHabits.length} habits from Habitica`);
     handleHabiticaSync();

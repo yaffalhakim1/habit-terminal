@@ -85,8 +85,10 @@ async function habiticaFetch(path: string, method: string = "GET", body?: unknow
 }
 
 export async function fetchTasks(type?: "habits" | "dailys" | "todos"): Promise<HabiticaTask[]> {
-  const query = type ? `?type=${type}` : "";
-  return habiticaFetch(`/tasks/user${query}`) as Promise<HabiticaTask[]>;
+  const params = new URLSearchParams();
+  if (type) params.set("type", type);
+  params.set("history", "true");
+  return habiticaFetch(`/tasks/user?${params}`) as Promise<HabiticaTask[]>;
 }
 
 export async function scoreTask(taskId: string, direction: "up" | "down"): Promise<{ hp: number; exp: number; lvl: number; gp: number; delta: number }> {

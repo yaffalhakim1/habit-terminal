@@ -16,7 +16,7 @@ interface Props {
   onEdit: (id: string, updates: Partial<Habit>) => void;
   onDelete: (id: string) => void;
   onAddHabit: (h: Omit<Habit, "id" | "streak" | "createdAt">) => void;
-  onImportHabits: (habits: Omit<Habit, "id" | "createdAt">[]) => void;
+  onImportHabits: (habits: Omit<Habit, "id" | "createdAt">[], history: Record<string, { done: string[]; counters: Record<string, number> }>) => void;
   habiticaConnected: boolean;
   habiticaIds: Set<string>;
 }

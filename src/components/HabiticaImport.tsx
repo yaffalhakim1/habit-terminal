@@ -1,12 +1,12 @@
 import { useState, useCallback } from "react";
-import type { Habit } from "../types";
+import type { Habit, DayLog } from "../types";
 import { useHabiticaTasks } from "../services/habitica-hooks";
-import { mapHabiticaTask } from "../services/habitica";
+import { mapHabiticaTask, mapHabiticaHistory } from "../services/habitica";
 import { ICONS, HABIT_COLORS } from "../constants";
 
 interface Props {
   existingHabitIds: Set<string>;
-  onImport: (habits: Omit<Habit, "id" | "createdAt">[]) => void;
+  onImport: (habits: Omit<Habit, "id" | "createdAt">[], history: Record<string, DayLog>) => void;
   onClose: () => void;
   open: boolean;
 }
@@ -40,8 +40,24 @@ export default function HabiticaImport({ existingHabitIds, onImport, onClose, op
         xp: { easy: 10, medium: 20, hard: 40 }[mapHabiticaTask(t).difficulty] || 20,
         createdAt: Date.now(),
       }));
+
+    // Merge history from all imported tasks
+    const mergedHistory: Record<string, { done: string[]; counters: Record<string, number> }> = {};
+    for (const task of unimported.filter((t) => selected.has(t._id))) {
+      const localId = toImport.find(h => h.habiticaId === task._id);
+      if (!localId) continue;
+
+      // We don't have the local ID yet, use a placeholder — the onImport will map it
+      const taskHistory = mapHabiticaHistory(task.history);
+      for (const [date] of Object.entries(taskHistory)) {
+        if (!mergedHistory[date]) mergedHistory[date] = { done: [], counters: {} };
+        // Store with habiticaId for the parent to resolve
+        mergedHistory[date].done.push(task._id);
+      }
+    }
+
     if (toImport.length > 0) {
-      onImport(toImport);
+      onImport(toImport, mergedHistory);
       setImported(true);
       setTimeout(() => {
         setImported(false);
