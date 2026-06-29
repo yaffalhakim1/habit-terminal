@@ -14,24 +14,51 @@
 
 ---
 
+<p align="center">
+  <img src="public/1.webp" alt="Habits tab" width="320" />
+  <img src="public/2.webp" alt="Profile tab" width="320" />
+</p>
+
 A monospace, terminal-themed habit tracker with gamified RPG progression. Build habits, track streaks, level up your character — all in a dark, minimal interface.
 
 ## Features
 
-- **15 themes** — Nothing Orange, Tokyo Night, Dracula, Nord, Gruvbox, Catppuccin Mocha, and more
 - **RPG leveling** — Earn XP from habits, level up, lose HP for missed days
 - **Streaks** — Track consecutive completions, earn fire badges
 - **Heatmap** — GitHub-style 12-week activity grid
 - **Edit habits** — Tap any habit to edit name, icon, color, schedule
+- **15 themes** — Nothing Orange, Tokyo Night, Dracula, Nord, Gruvbox, Catppuccin Mocha, and more
+- **Habitica sync** — Two-way sync with Habitica: import tasks, pull stats, auto-score on toggle
+- **AI reflection** — BYOK weekly report: grades, progress bars, suggestions (MiMo / OpenAI / Gemini)
 - **PWA** — Install on your phone, works offline
 - **No account** — All data stays in your browser (localStorage)
+
+## Integrations
+
+### Habitica
+
+Connect your Habitica account (User ID + API Key from Settings → API):
+
+- **Import** — Pull all your habits + dailies with history into term.habits
+- **Two-way sync** — Toggle a habit locally → auto-scores on Habitica
+- **Stats sync** — Your real level, XP, and HP from Habitica appear in the app
+
+### AI Reflection (BYOK)
+
+Bring your own API key for AI-powered weekly reports:
+
+- **Supported providers** — Xiaomi MiMo, OpenAI, Google Gemini
+- **Terminal-style output** — Habit grades (A-F), progress bars, `[INFO]`/`[WARN]`/`[CRITICAL]` tags
+- **Optional** — App works fully without an AI key
 
 ## Tech Stack
 
 - React 19 + TypeScript
 - Vite
-- CSS custom properties (no framework)
+- TanStack React Query
+- CSS custom properties with `clamp()` (no framework)
 - localStorage persistence
+- Habitica API v3
 
 ## Getting Started
 
