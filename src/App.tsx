@@ -1,10 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { Tab, ThemeName, Habit, StoreState } from "./types";
 import { THEMES, ACHIEVEMENTS } from "./constants";
 import { loadState, saveState, resetState, todayKey, xpToNext, calcStreak } from "./store";
 import { loadAIConfig } from "./services/ai";
 import { isHabiticaConnected } from "./services/sync";
 import { syncToggle } from "./services/sync";
+import { fetchUser } from "./services/habitica";
 import TopBar from "./components/TopBar";
 import TabNav from "./components/TabNav";
 import HabitsPage from "./components/HabitsPage";
@@ -122,6 +123,26 @@ export default function App() {
     });
   }, []);
 
+  const handleHabiticaSync = useCallback(async () => {
+    try {
+      const user = await fetchUser();
+      const next = {
+        ...state,
+        player: {
+          ...state.player,
+          level: user.stats.lvl,
+          xp: Math.round(user.stats.exp),
+          hp: Math.round(user.stats.hp),
+          maxHp: user.stats.maxHealth,
+        },
+      };
+      persist(next);
+      showToast("[ok] synced Habitica stats");
+    } catch (err) {
+      console.warn("Habitica stats sync failed:", err);
+    }
+  }, [state, persist, showToast]);
+
   const handleAddHabit = useCallback((h: Omit<Habit, "id" | "streak" | "createdAt">) => {
     const newH: Habit = { ...h, id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), streak: 0, createdAt: Date.now() };
     const next = { ...state, habits: [...state.habits, newH] };
@@ -138,7 +159,8 @@ export default function App() {
     const next = { ...state, habits: [...state.habits, ...newHabits] };
     persist(next);
     showToast(`[ok] imported ${newHabits.length} habits from Habitica`);
-  }, [state, persist, showToast]);
+    handleHabiticaSync();
+  }, [state, persist, showToast, handleHabiticaSync]);
 
   const handleDeleteHabit = useCallback((id: string) => {
     setModal({
@@ -181,6 +203,23 @@ export default function App() {
 
   const habiticaIds = new Set(state.habits.filter(h => h.habiticaId).map(h => h.habiticaId!));
 
+  // Sync Habitica stats on app load if connected
+  useEffect(() => {
+    if (!isHabiticaConnected()) return;
+    fetchUser().then(user => {
+      setState(prev => ({
+        ...prev,
+        player: {
+          ...prev.player,
+          level: user.stats.lvl,
+          xp: Math.round(user.stats.exp),
+          hp: Math.round(user.stats.hp),
+          maxHp: user.stats.maxHealth,
+        },
+      }));
+    }).catch(() => {});
+  }, []);
+
   return (
     <div className="app">
       <TopBar theme={state.theme} onThemeChange={handleThemeChange} onReset={handleReset} />
@@ -208,7 +247,7 @@ export default function App() {
           player={state.player}
           onReset={handleReset}
           onAIConfigChange={(c) => setHasAI(c !== null)}
-          onHabiticaConnect={() => setHabiticaConnected(true)}
+          onHabiticaConnect={() => { setHabiticaConnected(true); handleHabiticaSync(); }}
           onHabiticaDisconnect={() => setHabiticaConnected(false)}
           habiticaConnected={habiticaConnected}
         />
