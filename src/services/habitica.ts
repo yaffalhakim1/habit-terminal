@@ -25,7 +25,7 @@ export interface HabiticaTask {
   completed?: boolean;
   checklist?: Array<{ text: string; completed: boolean; id: string }>;
   tags: string[];
-  history?: Array<{ date: string; value: number; scoredUp?: boolean; scoredDown?: boolean }>;
+  history?: Array<{ date: string | number; value: number; scoredUp?: boolean; scoredDown?: boolean }>;
 }
 
 export interface HabiticaUser {
@@ -143,8 +143,10 @@ export function mapHabiticaHistory(history: HabiticaTask["history"]): Record<str
   const result: Record<string, { done: boolean }> = {};
   for (const entry of history) {
     if (entry.scoredUp) {
-      const date = entry.date.slice(0, 10);
-      result[date] = { done: true };
+      const dateStr = typeof entry.date === "string"
+        ? entry.date.slice(0, 10)
+        : new Date(entry.date).toISOString().slice(0, 10);
+      result[dateStr] = { done: true };
     }
   }
   return result;
