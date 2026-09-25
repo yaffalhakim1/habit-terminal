@@ -408,7 +408,7 @@ footer a:hover{color:var(--text);}
   window.addEventListener('hashchange', function(){
     if (window.location.hash === appHash) {
       showApp(false);
-    } else {
+    } else if (!window.location.hash || window.location.hash === '#') {
       showLanding();
     }
   });
