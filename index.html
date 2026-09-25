@@ -769,6 +769,7 @@
         const themeToggle = document.getElementById('landing-theme-toggle');
         const appLinks = document.querySelectorAll('[data-open-app="true"]');
         const heatmap = document.getElementById('landing-heatmap-grid');
+        const themeColorMeta = document.querySelector('meta[name="theme-color"]');
         const themes = ['dark', 'light'];
         const baseHref = 'https://yaffalhakim1.github.io/habit-terminal/';
         const heatValues = [
@@ -784,10 +785,12 @@
 
         const setTheme = (theme) => {
           body.dataset.landingTheme = theme;
-          localStorage.setItem('habit-terminal:landing-theme', theme);
+          try {
+            localStorage.setItem('habit-terminal:landing-theme', theme);
+          } catch {}
           const isLight = theme === 'light';
           document.documentElement.style.colorScheme = isLight ? 'light' : 'dark';
-          document.querySelector('meta[name="theme-color"]')?.setAttribute('content', isLight ? '#f3faf8' : '#071014');
+          themeColorMeta?.setAttribute('content', isLight ? '#f3faf8' : '#071014');
           if (themeToggle) {
             themeToggle.textContent = `theme: ${theme}`;
             themeToggle.setAttribute('aria-pressed', String(isLight));
@@ -798,6 +801,7 @@
           landing?.classList.add('landing-hidden');
           root?.removeAttribute('hidden');
           body.classList.remove('landing-view');
+          window.dispatchEvent(new CustomEvent('habit-terminal:app-open'));
           if (replaceHash && window.location.hash !== '#app') {
             window.history.replaceState(null, '', `${window.location.pathname}#app`);
           }
@@ -807,6 +811,7 @@
           landing?.classList.remove('landing-hidden');
           root?.setAttribute('hidden', '');
           body.classList.add('landing-view');
+          window.dispatchEvent(new CustomEvent('habit-terminal:app-close'));
         };
 
         for (const [index, value] of heatValues.entries()) {
@@ -817,7 +822,10 @@
           heatmap?.appendChild(cell);
         }
 
-        const savedTheme = localStorage.getItem('habit-terminal:landing-theme');
+        let savedTheme = null;
+        try {
+          savedTheme = localStorage.getItem('habit-terminal:landing-theme');
+        } catch {}
         setTheme(savedTheme && themes.includes(savedTheme) ? savedTheme : 'dark');
 
         themeToggle?.addEventListener('click', () => {
