@@ -385,9 +385,6 @@ footer a:hover{color:var(--text);}
     if (root) root.hidden = false;
     window.__habitTerminalAppVisible = true;
     window.dispatchEvent(new CustomEvent('habit-terminal:app-open'));
-    if (pushHash !== false) {
-      landingUrl = window.location.pathname + window.location.search + window.location.hash;
-    }
     if (pushHash !== false && window.location.hash !== appHash) {
       window.history.pushState(null, '', window.location.pathname + window.location.search + appHash);
     }
@@ -416,6 +413,7 @@ footer a:hover{color:var(--text);}
         return;
       }
       lastAppLink = event.currentTarget instanceof HTMLElement ? event.currentTarget : link;
+      landingUrl = window.location.pathname + window.location.search + window.location.hash;
       event.preventDefault();
       showApp(true);
     });
