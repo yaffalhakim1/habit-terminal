@@ -772,7 +772,7 @@
       </footer>
     </div>
 
-    <div id="root" hidden tabindex="-1"></div>
+    <div id="root" hidden tabindex="-1" role="main" aria-label="Habit tracker app"></div>
 
     <script>
       (() => {
@@ -829,17 +829,15 @@
             window.history.pushState(null, '', `${window.location.pathname}${window.location.search}`);
           }
           landing?.classList.remove('landing-hidden');
-          root?.setAttribute('hidden', '');
           body.classList.add('landing-view');
+          if (lastAppOpener instanceof HTMLElement && lastAppOpener.isConnected) {
+            lastAppOpener.focus();
+          } else {
+            primaryAppLink?.focus();
+          }
+          root?.setAttribute('hidden', '');
           window.__habitTerminalAppVisible = false;
           window.dispatchEvent(new CustomEvent('habit-terminal:app-close'));
-          window.requestAnimationFrame(() => {
-            if (lastAppOpener instanceof HTMLElement && lastAppOpener.isConnected) {
-              lastAppOpener.focus();
-              return;
-            }
-            primaryAppLink?.focus();
-          });
         };
 
         for (const [index, value] of heatValues.entries()) {
