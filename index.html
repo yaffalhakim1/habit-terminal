@@ -379,6 +379,18 @@
         color: var(--landing-text-soft);
       }
 
+      .landing-visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
       .landing-stat-row {
         display: grid;
         gap: 10px;
@@ -682,10 +694,11 @@
             </div>
             <div class="landing-terminal-screen">
               <pre class="landing-command">$ habits status --today</pre>
-              <pre class="landing-output">[ok] meditate         ██████████ 100%
+              <pre class="landing-output" aria-hidden="true">[ok] meditate         ██████████ 100%
 [ok] workout          ███████░░░ 70%
 [todo] journal        ███░░░░░░░ 30%
 [info] streak         19 days active</pre>
+              <p class="landing-visually-hidden">Meditate is complete at 100 percent. Workout is at 70 percent. Journal is at 30 percent. Current streak is 19 active days.</p>
               <div class="landing-stat-row">
                 <div class="landing-progress">
                   <span>xp progress // level 12 → 13</span>
@@ -802,6 +815,7 @@
           landing?.classList.add('landing-hidden');
           root?.removeAttribute('hidden');
           body.classList.remove('landing-view');
+          window.__habitTerminalAppVisible = true;
           window.dispatchEvent(new CustomEvent('habit-terminal:app-open'));
           if (replaceHash && window.location.hash !== '#app') {
             window.history.pushState(null, '', `${window.location.pathname}${window.location.search}#app`);
@@ -816,6 +830,7 @@
           landing?.classList.remove('landing-hidden');
           root?.setAttribute('hidden', '');
           body.classList.add('landing-view');
+          window.__habitTerminalAppVisible = false;
           window.dispatchEvent(new CustomEvent('habit-terminal:app-close'));
           window.requestAnimationFrame(() => primaryAppLink?.focus());
         };
@@ -858,8 +873,12 @@
           }
         });
 
+        window.addEventListener('habit-terminal:landing-open', showLanding);
+
         if (window.location.hash === '#app') {
           showApp(false);
+        } else {
+          window.__habitTerminalAppVisible = false;
         }
       })();
     </script>
