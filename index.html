@@ -365,7 +365,7 @@ footer a:hover{color:var(--text);}
   apply(saved);
 })();
 </script>
-<div id="root" hidden tabindex="-1" aria-label="Habit tracker app"></div>
+<main id="root" hidden tabindex="-1" aria-label="Habit tracker app"></main>
 
 <script>
 (function(){
@@ -377,10 +377,7 @@ footer a:hover{color:var(--text);}
 
   function showApp(pushHash){
     landingSections.forEach(function(section){ section.hidden = true; });
-    if (root) {
-      root.hidden = false;
-      root.setAttribute('role', 'main');
-    }
+    if (root) root.hidden = false;
     window.__habitTerminalAppVisible = true;
     window.dispatchEvent(new CustomEvent('habit-terminal:app-open'));
     if (pushHash !== false && window.location.hash !== appHash) {
@@ -393,10 +390,7 @@ footer a:hover{color:var(--text);}
 
   function showLanding(){
     landingSections.forEach(function(section){ section.hidden = false; });
-    if (root) {
-      root.hidden = true;
-      root.removeAttribute('role');
-    }
+    if (root) root.hidden = true;
     window.__habitTerminalAppVisible = false;
     window.dispatchEvent(new CustomEvent('habit-terminal:app-close'));
     window.requestAnimationFrame(function(){
