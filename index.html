@@ -784,6 +784,7 @@
         const appLinks = document.querySelectorAll('[data-open-app="true"]');
         const heatmap = document.getElementById('landing-heatmap-grid');
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+        let lastAppOpener = null;
         const themes = ['dark', 'light'];
         const appHref = 'https://yaffalhakim1.github.io/habit-terminal/#app';
         const heatValues = [
@@ -832,7 +833,13 @@
           body.classList.add('landing-view');
           window.__habitTerminalAppVisible = false;
           window.dispatchEvent(new CustomEvent('habit-terminal:app-close'));
-          window.requestAnimationFrame(() => primaryAppLink?.focus());
+          window.requestAnimationFrame(() => {
+            if (lastAppOpener instanceof HTMLElement && lastAppOpener.isConnected) {
+              lastAppOpener.focus();
+              return;
+            }
+            primaryAppLink?.focus();
+          });
         };
 
         for (const [index, value] of heatValues.entries()) {
@@ -856,6 +863,9 @@
 
         for (const appLink of appLinks) {
           appLink.addEventListener('click', (event) => {
+            if (event.currentTarget instanceof HTMLElement) {
+              lastAppOpener = event.currentTarget;
+            }
             if (event.currentTarget instanceof HTMLAnchorElement && (
               event.currentTarget.href === appHref || event.currentTarget.getAttribute('href') === '#root'
             )) {

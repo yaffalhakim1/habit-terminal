@@ -9,8 +9,8 @@ export function createAppLifecycle(mount: () => void, unmount: () => void) {
     },
     close() {
       if (!mounted) return
-      unmount()
       mounted = false
+      unmount()
     },
   }
 }
