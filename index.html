@@ -369,12 +369,13 @@ footer a:hover{color:var(--text);}
   apply(saved);
 })();
 </script>
-<main id="root" hidden tabindex="-1" aria-label="Habit tracker app"></main>
+<div id="root" hidden tabindex="-1" aria-label="Habit tracker app"></div>
 
 <script>
 (function(){
   var root = document.getElementById('root');
   var appHash = '#app';
+  var landingUrl = window.location.hash === appHash ? window.location.pathname + window.location.search : window.location.pathname + window.location.search + window.location.hash;
   var lastAppLink = null;
   var landingSections = Array.prototype.slice.call(document.querySelectorAll('body > header, body > main, body > footer'));
   var appLinks = Array.prototype.slice.call(document.querySelectorAll('a[href="#app"]'));
@@ -384,6 +385,9 @@ footer a:hover{color:var(--text);}
     if (root) root.hidden = false;
     window.__habitTerminalAppVisible = true;
     window.dispatchEvent(new CustomEvent('habit-terminal:app-open'));
+    if (pushHash !== false) {
+      landingUrl = window.location.pathname + window.location.search + window.location.hash;
+    }
     if (pushHash !== false && window.location.hash !== appHash) {
       window.history.pushState(null, '', window.location.pathname + window.location.search + appHash);
     }
@@ -427,7 +431,7 @@ footer a:hover{color:var(--text);}
 
   window.addEventListener('habit-terminal:landing-open', function(){
     if (window.location.hash === appHash) {
-      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      window.history.replaceState(null, '', landingUrl || (window.location.pathname + window.location.search));
     }
     showLanding();
   });
