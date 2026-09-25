@@ -200,7 +200,7 @@ footer a:hover{color:var(--text);}
   <nav class="wrap">
     <div class="logo"><span>$</span> term.habits</div>
     <div class="nav-links">
-      <a class="ghost" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <a class="ghost" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
       <a class="btn btn-primary" href="https://yaffalhakim1.github.io/habit-terminal/">Launch app</a>
     </div>
   </nav>
@@ -215,7 +215,7 @@ footer a:hover{color:var(--text);}
         <p class="sub">Earn XP for every habit you complete, level up your character, and take HP damage when you skip. Runs entirely in your browser — no account, no server, no tracking.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://yaffalhakim1.github.io/habit-terminal/">Launch app →</a>
-          <a class="btn btn-outline" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noreferrer">View source</a>
+          <a class="btn btn-outline" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noopener noreferrer">View source</a>
         </div>
         <div class="meta-line"><b>Free & open source</b> · works offline · installs as a PWA</div>
       </div>
@@ -285,7 +285,7 @@ footer a:hover{color:var(--text);}
         <p>No signup. No paywall. Your data stays on your device.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://yaffalhakim1.github.io/habit-terminal/">Launch app →</a>
-          <a class="btn btn-outline" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noreferrer">Star on GitHub</a>
+          <a class="btn btn-outline" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noopener noreferrer">Star on GitHub</a>
         </div>
       </div>
     </div>
@@ -295,7 +295,7 @@ footer a:hover{color:var(--text);}
 <footer>
   <div class="wrap">
     <span>term.habits · MIT license</span>
-    <span>built by <a href="https://github.com/yaffalhakim1" target="_blank" rel="noreferrer">yaffalhakim1</a></span>
+    <span>built by <a href="https://github.com/yaffalhakim1" target="_blank" rel="noopener noreferrer">yaffalhakim1</a></span>
   </div>
 </footer>
 
@@ -324,6 +324,7 @@ footer a:hover{color:var(--text);}
     'Catppuccin Mocha':{bg:'#1e1e2e', elev:'#272839', elev2:'#313244', border:'#45475a', text:'#cdd6f4', dim:'#9399b2', accent:'#f5c2e7', accent2:'#cba6f7'}
   };
   var root = document.documentElement.style;
+  var themeColorMeta = document.querySelector('meta[name="theme-color"]');
   var wrap = document.getElementById('swatches');
   var stack = document.getElementById('stack');
   ['React 19','TypeScript','Vite','TanStack Query','localStorage','Habitica API v3'].forEach(function(t){
@@ -331,11 +332,13 @@ footer a:hover{color:var(--text);}
   });
 
   function apply(name){
+    if (!themes[name]) name = 'Nothing Orange';
     var t = themes[name];
     root.setProperty('--bg', t.bg); root.setProperty('--bg-elev', t.elev);
     root.setProperty('--bg-elev2', t.elev2); root.setProperty('--border', t.border);
     root.setProperty('--text', t.text); root.setProperty('--text-dim', t.dim);
     root.setProperty('--accent', t.accent); root.setProperty('--accent-2', t.accent2);
+    if (themeColorMeta) themeColorMeta.setAttribute('content', t.bg);
     document.querySelectorAll('.swatch').forEach(function(b){ b.classList.toggle('active', b.dataset.name === name); });
     try{ localStorage.setItem('termhabits-theme', name); }catch(e){}
   }
