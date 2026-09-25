@@ -804,7 +804,7 @@
           body.classList.remove('landing-view');
           window.dispatchEvent(new CustomEvent('habit-terminal:app-open'));
           if (replaceHash && window.location.hash !== '#app') {
-            window.history.pushState(null, '', `${window.location.pathname}#app`);
+            window.history.pushState(null, '', `${window.location.pathname}${window.location.search}#app`);
           }
           window.requestAnimationFrame(() => root?.focus());
         };
@@ -850,7 +850,7 @@
         window.addEventListener('hashchange', () => {
           if (window.location.hash === '#app') {
             showApp(false);
-          } else {
+          } else if (!window.location.hash || window.location.hash === '#') {
             showLanding();
           }
         });
