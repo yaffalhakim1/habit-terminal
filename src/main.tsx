@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './theme.css'
 import App from './App'
 import ErrorBoundary from './components/ErrorBoundary'
+import { createAppLifecycle } from './appLifecycle'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -34,11 +35,13 @@ function unmountApp() {
   root = null
 }
 
-window.addEventListener('habit-terminal:app-open', renderApp)
-window.addEventListener('habit-terminal:app-close', unmountApp)
+const lifecycle = createAppLifecycle(renderApp, unmountApp)
+
+window.addEventListener('habit-terminal:app-open', () => lifecycle.open())
+window.addEventListener('habit-terminal:app-close', () => lifecycle.close())
 
 if (window.location.hash === '#app') {
-  renderApp()
+  lifecycle.open()
 }
 
 if ("serviceWorker" in navigator) {

@@ -660,7 +660,7 @@
             </p>
 
             <div class="landing-actions">
-              <a id="landing-app-link" class="landing-app-link" href="https://yaffalhakim1.github.io/habit-terminal/" data-open-app="true">Open app</a>
+              <a id="landing-app-link" class="landing-app-link" href="https://yaffalhakim1.github.io/habit-terminal/#app" data-open-app="true">Open app</a>
               <a class="landing-link" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noreferrer">View source</a>
               <a class="landing-link" href="https://github.com/yaffalhakim1" target="_blank" rel="noreferrer">Meet the author</a>
             </div>
@@ -752,7 +752,7 @@
       <footer class="landing-footer">
         <p class="landing-footer-copy">Public landing page for term.habits. The tracker remains available from the app entry above.</p>
         <div class="landing-footer-links">
-          <a class="landing-link" href="https://yaffalhakim1.github.io/habit-terminal/" data-open-app="true">App</a>
+          <a class="landing-link" href="https://yaffalhakim1.github.io/habit-terminal/#app" data-open-app="true">App</a>
           <a class="landing-link" href="https://github.com/yaffalhakim1/habit-terminal" target="_blank" rel="noreferrer">Source</a>
           <a class="landing-link" href="https://github.com/yaffalhakim1" target="_blank" rel="noreferrer">Author</a>
         </div>
@@ -772,7 +772,7 @@
         const heatmap = document.getElementById('landing-heatmap-grid');
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
         const themes = ['dark', 'light'];
-        const baseHref = 'https://yaffalhakim1.github.io/habit-terminal/';
+        const appHref = 'https://yaffalhakim1.github.io/habit-terminal/#app';
         const heatValues = [
           0.12, 0.24, 0.18, 0.36, 0.42, 0.3, 0.18, 0.08, 0.16, 0.38, 0.52, 0.24,
           0.14, 0.28, 0.44, 0.2, 0.12, 0.1, 0.34, 0.5, 0.22, 0.14, 0.3, 0.48,
@@ -810,6 +810,9 @@
         };
 
         const showLanding = () => {
+          if (window.location.hash === '#app') {
+            window.history.pushState(null, '', `${window.location.pathname}${window.location.search}`);
+          }
           landing?.classList.remove('landing-hidden');
           root?.setAttribute('hidden', '');
           body.classList.add('landing-view');
@@ -839,7 +842,7 @@
         for (const appLink of appLinks) {
           appLink.addEventListener('click', (event) => {
             if (event.currentTarget instanceof HTMLAnchorElement && (
-              event.currentTarget.href === baseHref || event.currentTarget.getAttribute('href') === '#root'
+              event.currentTarget.href === appHref || event.currentTarget.getAttribute('href') === '#root'
             )) {
               event.preventDefault();
             }
