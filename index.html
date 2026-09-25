@@ -369,7 +369,7 @@ footer a:hover{color:var(--text);}
   apply(saved);
 })();
 </script>
-<div id="root" hidden tabindex="-1" aria-label="Habit tracker app"></div>
+<div id="root" hidden tabindex="-1" role="main" aria-label="Habit tracker app"></div>
 
 <script>
 (function(){
@@ -431,7 +431,7 @@ footer a:hover{color:var(--text);}
 
   window.addEventListener('habit-terminal:landing-open', function(){
     if (window.location.hash === appHash) {
-      window.history.replaceState(null, '', landingUrl || (window.location.pathname + window.location.search));
+      window.history.pushState(null, '', landingUrl || (window.location.pathname + window.location.search));
     }
     showLanding();
   });

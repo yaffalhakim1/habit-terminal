@@ -241,7 +241,7 @@ export default function App() {
   }, []);
 
   return (
-    <main className="app" aria-label="Habit tracker app">
+    <div className="app">
       <TopBar theme={state.theme} onThemeChange={handleThemeChange} onReset={handleReset} />
       <TabNav active={tab} onChange={setTab} />
 
@@ -275,6 +275,6 @@ export default function App() {
 
       <Toast show={!!toast} msg={toast?.msg || ""} type={toast?.type || "info"} />
       {modal && <ConfirmModal title={modal.title} body={modal.body} onConfirm={modal.onConfirm} onCancel={() => setModal(null)} />}
-    </main>
+    </div>
   );
 }
