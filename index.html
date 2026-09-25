@@ -429,7 +429,11 @@ footer a:hover{color:var(--text);}
 
   window.addEventListener('habit-terminal:landing-open', function(){
     if (window.location.hash === appHash) {
-      window.history.replaceState(null, '', landingUrl || (window.location.pathname + window.location.search));
+      var nextLandingUrl = landingUrl || (window.location.pathname + window.location.search);
+      if (nextLandingUrl.slice(-appHash.length) === appHash) {
+        nextLandingUrl = window.location.pathname + window.location.search;
+      }
+      window.history.replaceState(null, '', nextLandingUrl);
     }
     showLanding();
   });
