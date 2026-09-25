@@ -624,7 +624,7 @@
   </head>
   <body class="landing-view" data-landing-theme="dark">
     <div id="landing-page" class="landing-shell">
-      <a class="landing-skip-link" href="https://yaffalhakim1.github.io/habit-terminal/" data-open-app="true">Skip to app</a>
+      <a class="landing-skip-link" href="#root" data-open-app="true">Skip to app</a>
 
       <header class="landing-header">
         <div class="landing-brand">
@@ -759,7 +759,7 @@
       </footer>
     </div>
 
-    <div id="root" hidden></div>
+    <div id="root" hidden tabindex="-1"></div>
 
     <script>
       (() => {
@@ -767,6 +767,7 @@
         const root = document.getElementById('root');
         const landing = document.getElementById('landing-page');
         const themeToggle = document.getElementById('landing-theme-toggle');
+        const primaryAppLink = document.getElementById('landing-app-link');
         const appLinks = document.querySelectorAll('[data-open-app="true"]');
         const heatmap = document.getElementById('landing-heatmap-grid');
         const themeColorMeta = document.querySelector('meta[name="theme-color"]');
@@ -803,8 +804,9 @@
           body.classList.remove('landing-view');
           window.dispatchEvent(new CustomEvent('habit-terminal:app-open'));
           if (replaceHash && window.location.hash !== '#app') {
-            window.history.replaceState(null, '', `${window.location.pathname}#app`);
+            window.history.pushState(null, '', `${window.location.pathname}#app`);
           }
+          window.requestAnimationFrame(() => root?.focus());
         };
 
         const showLanding = () => {
@@ -812,6 +814,7 @@
           root?.setAttribute('hidden', '');
           body.classList.add('landing-view');
           window.dispatchEvent(new CustomEvent('habit-terminal:app-close'));
+          window.requestAnimationFrame(() => primaryAppLink?.focus());
         };
 
         for (const [index, value] of heatValues.entries()) {
@@ -835,7 +838,9 @@
 
         for (const appLink of appLinks) {
           appLink.addEventListener('click', (event) => {
-            if (event.currentTarget instanceof HTMLAnchorElement && event.currentTarget.href === baseHref) {
+            if (event.currentTarget instanceof HTMLAnchorElement && (
+              event.currentTarget.href === baseHref || event.currentTarget.getAttribute('href') === '#root'
+            )) {
               event.preventDefault();
             }
             showApp();
