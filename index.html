@@ -26,6 +26,8 @@ body{
 img,svg{max-width:100%;}
 .wrap{max-width:1080px; margin:0 auto; padding:0 24px;}
 a{color:inherit;}
+.skip-app{position:absolute;left:24px;top:-48px;z-index:100;font-family:var(--mono);background:var(--accent);color:var(--bg);padding:10px 14px;border-radius:6px;text-decoration:none;transition:top .15s ease;}
+.skip-app:focus{top:12px;}
 
 /* ---- nav ---- */
 header{
@@ -195,6 +197,8 @@ footer a:hover{color:var(--text);}
 <link rel="icon" type="image/svg+xml" href="/habit-terminal/favicon.svg">
 </head>
 <body>
+
+<a class="skip-app" href="#app">Skip to app</a>
 
 <header>
   <nav class="wrap">
